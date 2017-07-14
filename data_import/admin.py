@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 from . import models
-from .models import ContentPost, ContentPostImage,Information
+from .models import ContentPost, ContentPostImage,Information,TransRelation
 
 from django.forms import TextInput, Textarea
 

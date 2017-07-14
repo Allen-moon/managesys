@@ -10,7 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect, StreamingHttpRespons
 from data_import.SteelPricePredict.data_cleaning import get_history_price,create_single_model
 from data_import.SteelPricePredict.pre_config import steel_type,predict_method,time_scale,INFO,WARNING,model_classname
 import data_import.SteelPricePredict.PredictModels as PredictModels
-
+from . import util
 '''
 预测相关方法在SteelPricePredict文件夹中
 '''
@@ -118,8 +118,27 @@ def price_predict(request):
 	}
 	contentVO["result"] = models_result
 	return HttpResponse(json.dumps(contentVO), content_type='application/json')
+def load_steel_option(request):
+	sqlVO={}
+	sqlVO["sql"]="SELECT * FROM `data_import_steelprice`"
+	# sqlVO["vars"]=["procedure"]
+
+	option_value={}
+	procedure_names=models.BaseManage().direct_select_query_sqlVO(sqlVO)
+	#print(procedure_names)
+	for name in procedure_names:
+		option_value[name["procedurename"]]=name["remark"]
+	contentVO={
+		'title':'ajaxtest请求结果',
+		'state':'success',
+		'procedure_names':option_value,
+	}
+	return HttpResponse(json.dumps(contentVO), content_type='application/json')
+
 if __name__ == '__main__':
-	types = []
-	types.append('elm')
-	result = map(execute_models,types)
-	logger.debug(result)
+	# types = []
+	# types.append('elm')
+	# result = map(execute_models,types)
+	# logger.debug(result)
+	attrs = get_model_attrs()
+

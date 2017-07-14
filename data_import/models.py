@@ -239,12 +239,26 @@ class TransRelation(models.Model):
 
 
 class steel_price(models.Model):
-	own_uid = models.CharField(max_length=100,blank=True)
-	final_price = models.FloatField(blank=True)
-	highest_price = models.FloatField(blank=True)
-	lowest_price =models.FloatField(blank=True)
-	count = models.FloatField(blank=True)
-	count_price = models.FloatField(blank=True)
+	steeltype = models.CharField(max_length=100,blank=True)
+	tradeno = models.CharField(max_length=100,blank=True)
+	delivery = models.CharField(max_length=100,blank=True)
+	specification = models.CharField(max_length=100,blank=True)
+	factory = models.CharField(max_length=100,blank=True)
+	price = models.CharField(max_length=100,blank=True)
+	updown = models.CharField(max_length=100,blank=True)
+	region = models.CharField(max_length=100,blank=True)
+	trademark = models.CharField(max_length=100,blank=True)
+	updatetime = models.DateTimeField(blank=True)
+	remark = models.CharField(max_length=100,blank=True)
+	
+	def set_attr(self,**kwargs):
+		#print(kwargs.items())
+		for item in kwargs.items():
+			for each in item[1].items():
+				#print('{0}:{1}'.format(each[0],each[1]))
+				setattr(self,each[0],each[1])
+
+
 
 class MaterialCode(models.Model):
 	"""docstring for Material code"""
